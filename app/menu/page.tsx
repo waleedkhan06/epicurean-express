@@ -11,8 +11,9 @@ import { PageHero } from "@/app/components/PageHero";
 import { GoldButton } from "@/app/components/GoldButton";
 import { useCart } from "@/app/hooks/useCart";
 import { formatPrice } from "@/app/lib/utils";
-import { Search, Clock, Flame, Star, ChevronRight } from "lucide-react";
+import { Search, Clock, Flame, Star, ChevronRight, ArrowUpRight } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function MenuPage() {
   const [activeCategory, setActiveCategory] = useState("all");
@@ -116,43 +117,47 @@ export default function MenuPage() {
                   transition={{ delay: index * 0.05 }}
                   className="group relative bg-obsidian-700 rounded-2xl overflow-hidden border border-gold-400/10 hover:border-gold-400/30 transition-all duration-500"
                 >
-                  <div className="relative h-64 overflow-hidden">
-                    <Image
-                      src={item.image}
-                      alt={item.name}
-                      fill
-                      className="object-cover transition-transform duration-700 group-hover:scale-110"
-                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-obsidian-700 via-transparent to-transparent" />
-                    <div className="absolute top-4 left-4 flex flex-wrap gap-2">
-                      {item.isSignature && (
-                        <span className="px-3 py-1 bg-gold-gradient rounded-full font-body text-xs font-bold text-obsidian-900 flex items-center gap-1">
-                          <Star className="w-3 h-3" aria-hidden="true" />
-                          Signature
+                  <Link href={`/menu/${item.id}`} className="block">
+                    <div className="relative h-64 overflow-hidden">
+                      <Image
+                        src={item.image}
+                        alt={item.name}
+                        fill
+                        className="object-cover transition-transform duration-700 group-hover:scale-110"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-obsidian-700 via-transparent to-transparent" />
+                      <div className="absolute top-4 left-4 flex flex-wrap gap-2">
+                        {item.isSignature && (
+                          <span className="px-3 py-1 bg-gold-gradient rounded-full font-body text-xs font-bold text-obsidian-900 flex items-center gap-1">
+                            <Star className="w-3 h-3" aria-hidden="true" />
+                            Signature
+                          </span>
+                        )}
+                        {item.tags.slice(0, 2).map((tag) => (
+                          <span
+                            key={tag}
+                            className="px-3 py-1 bg-obsidian-900/80 backdrop-blur-sm border border-gold-400/20 rounded-full font-body text-xs text-gold-300"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                      <div className="absolute top-4 right-4 px-4 py-1.5 bg-obsidian-900/90 backdrop-blur-sm border border-gold-400/20 rounded-lg">
+                        <span className="font-display text-xl text-gold-400">
+                          {formatPrice(item.price)}
                         </span>
-                      )}
-                      {item.tags.slice(0, 2).map((tag) => (
-                        <span
-                          key={tag}
-                          className="px-3 py-1 bg-obsidian-900/80 backdrop-blur-sm border border-gold-400/20 rounded-full font-body text-xs text-gold-300"
-                        >
-                          {tag}
-                        </span>
-                      ))}
+                      </div>
                     </div>
-                    <div className="absolute top-4 right-4 px-4 py-1.5 bg-obsidian-900/90 backdrop-blur-sm border border-gold-400/20 rounded-lg">
-                      <span className="font-display text-xl text-gold-400">
-                        {formatPrice(item.price)}
-                      </span>
-                    </div>
-                  </div>
+                  </Link>
 
                   <div className="p-6 space-y-4">
                     <div>
-                      <h3 className="font-display text-lg sm:text-xl text-obsidian-100 group-hover:text-gold-400 transition-colors mb-2">
-                        {item.name}
-                      </h3>
+                      <Link href={`/menu/${item.id}`}>
+                        <h3 className="font-display text-lg sm:text-xl text-obsidian-100 group-hover:text-gold-400 transition-colors mb-2">
+                          {item.name}
+                        </h3>
+                      </Link>
                       <p className="font-body text-sm text-obsidian-400 line-clamp-2 leading-relaxed">
                         {item.description}
                       </p>
@@ -203,6 +208,13 @@ export default function MenuPage() {
                       >
                         Add to Order
                       </GoldButton>
+                      <Link
+                        href={`/menu/${item.id}`}
+                        className="w-10 h-10 rounded-xl bg-obsidian-600/50 border border-gold-400/20 flex items-center justify-center text-gold-400 hover:bg-gold-400 hover:text-obsidian-900 transition-all flex-shrink-0"
+                        aria-label={`View details for ${item.name}`}
+                      >
+                        <ArrowUpRight className="w-4 h-4" aria-hidden="true" />
+                      </Link>
                     </div>
                   </div>
                 </motion.div>

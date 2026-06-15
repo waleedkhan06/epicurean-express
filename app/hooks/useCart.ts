@@ -2,10 +2,12 @@
 
 import { useState, useCallback, useEffect } from "react";
 import { CartItem, MenuItem } from "@/app/types";
+import { useToast } from "@/app/components/Toast";
 
 export function useCart() {
   const [items, setItems] = useState<CartItem[]>([]);
   const [isOpen, setIsOpen] = useState(false);
+  const { showToast } = useToast();
 
   useEffect(() => {
     const saved = localStorage.getItem("epicurean-cart");
@@ -36,8 +38,9 @@ export function useCart() {
       }
       return [...prev, { ...item, quantity: 1, selectedOptions: options }];
     });
+    showToast(`${item.name} added to order`);
     setIsOpen(true);
-  }, []);
+  }, [showToast]);
 
   const removeItem = useCallback((itemId: string, options?: Record<string, string>) => {
     setItems((prev) =>
