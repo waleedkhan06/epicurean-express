@@ -203,7 +203,7 @@ export function CartDrawer({
                     {formatPrice(totalPrice)}
                   </span>
                 </div>
-                <GoldButton className="w-full" size="lg" href="/menu">
+                <GoldButton className="w-full" size="lg" href="/order">
                   Proceed to Checkout
                 </GoldButton>
                 <button

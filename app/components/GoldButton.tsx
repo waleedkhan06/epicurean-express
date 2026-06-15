@@ -10,6 +10,7 @@ interface GoldButtonProps {
   className?: string;
   onClick?: () => void;
   href?: string;
+  type?: "button" | "submit" | "reset";
 }
 
 export function GoldButton({
@@ -19,6 +20,7 @@ export function GoldButton({
   className,
   onClick,
   href,
+  type = "button",
 }: GoldButtonProps) {
   const shouldReduceMotion = useReducedMotion();
   const baseStyles = "relative overflow-hidden font-body font-semibold tracking-wider uppercase transition-all duration-300 inline-flex items-center justify-center";
@@ -41,6 +43,7 @@ export function GoldButton({
     <Component
       href={href}
       onClick={onClick}
+      type={href ? undefined : type}
       className={cn(baseStyles, variants[variant], sizes[size], className)}
       whileHover={shouldReduceMotion ? {} : { scale: 1.02 }}
       whileTap={shouldReduceMotion ? {} : { scale: 0.98 }}

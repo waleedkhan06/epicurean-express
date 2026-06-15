@@ -215,6 +215,7 @@ export const navLinks = [
   { label: "Our Story", href: "/about" },
   { label: "Locations", href: "/locations" },
   { label: "Contact", href: "/contact" },
+  { label: "Order", href: "/order" },
 ];
 
 export const categories = [
