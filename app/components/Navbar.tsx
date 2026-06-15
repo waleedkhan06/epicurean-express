@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ShoppingBag, Menu, X } from "lucide-react";
+import { ShoppingBag, Menu, X, User } from "lucide-react";
+import { useUser, UserButton } from "@clerk/nextjs";
 import { navLinks } from "@/app/lib/data";
 import { GoldButton } from "./GoldButton";
 import Link from "next/link";
@@ -11,6 +12,92 @@ import { usePathname } from "next/navigation";
 interface NavbarProps {
   cartCount: number;
   onCartClick: () => void;
+}
+
+function SignedInNav() {
+  const { isSignedIn } = useUser();
+
+  if (!isSignedIn) {
+    return (
+      <div className="flex items-center gap-3">
+        <Link
+          href="/sign-in"
+          className="font-body text-sm text-obsidian-300 hover:text-gold-400 transition-colors"
+        >
+          Sign In
+        </Link>
+        <Link
+          href="/sign-up"
+          className="font-body text-sm text-gold-400 hover:text-gold-300 transition-colors"
+        >
+          Sign Up
+        </Link>
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex items-center gap-3">
+      <Link
+        href="/settings"
+        className="font-body text-sm text-obsidian-300 hover:text-gold-400 transition-colors flex items-center gap-1.5"
+      >
+        <User className="w-3.5 h-3.5" aria-hidden="true" />
+        Account
+      </Link>
+      <UserButton
+        appearance={{
+          elements: {
+            avatarBox: "w-8 h-8 border-2 border-gold-400/30 hover:border-gold-400 transition-colors rounded-full",
+          },
+        }}
+      />
+    </div>
+  );
+}
+
+function MobileAuthNav() {
+  const { isSignedIn } = useUser();
+
+  if (!isSignedIn) {
+    return (
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.4, duration: 0.5 }}
+        className="flex items-center gap-4"
+      >
+        <Link
+          href="/sign-in"
+          className="font-body text-sm text-obsidian-300 hover:text-gold-400 transition-colors"
+        >
+          Sign In
+        </Link>
+        <Link
+          href="/sign-up"
+          className="font-body text-sm text-gold-400 hover:text-gold-300 transition-colors"
+        >
+          Sign Up
+        </Link>
+      </motion.div>
+    );
+  }
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.4, duration: 0.5 }}
+      className="flex items-center gap-4"
+    >
+      <Link
+        href="/settings"
+        className="font-body text-sm text-obsidian-300 hover:text-gold-400 transition-colors"
+      >
+        Account
+      </Link>
+    </motion.div>
+  );
 }
 
 export function Navbar({ cartCount, onCartClick }: NavbarProps) {
@@ -105,7 +192,8 @@ export function Navbar({ cartCount, onCartClick }: NavbarProps) {
                 </AnimatePresence>
               </motion.button>
 
-              <div className="hidden md:block">
+              <div className="hidden md:flex items-center gap-4">
+                <SignedInNav />
                 <GoldButton size="sm" href="/menu">
                   Order Now
                 </GoldButton>
@@ -154,10 +242,11 @@ export function Navbar({ cartCount, onCartClick }: NavbarProps) {
                   </motion.div>
                 );
               })}
+              <MobileAuthNav />
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4, duration: 0.5 }}
+                transition={{ delay: 0.5, duration: 0.5 }}
               >
                 <GoldButton size="lg" href="/menu" onClick={() => setIsMobileMenuOpen(false)}>
                   Order Now

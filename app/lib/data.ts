@@ -216,6 +216,7 @@ export const navLinks = [
   { label: "Locations", href: "/locations" },
   { label: "Contact", href: "/contact" },
   { label: "Order", href: "/order" },
+  { label: "Settings", href: "/settings" },
 ];
 
 export const categories = [

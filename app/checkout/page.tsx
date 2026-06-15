@@ -52,6 +52,20 @@ export default function CheckoutPage() {
     if (currentStep < steps.length - 1) {
       setCurrentStep((prev) => prev + 1);
     } else {
+      const order = {
+        id: crypto.randomUUID?.() || `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+        items: cart.items.map((i) => ({
+          name: i.name,
+          quantity: i.quantity,
+          price: i.price,
+        })),
+        total: cart.totalPrice + Math.round(cart.totalPrice * 0.08),
+        date: new Date().toISOString(),
+        status: "Confirmed",
+      };
+      const existing = JSON.parse(localStorage.getItem("epicurean-orders") || "[]");
+      existing.unshift(order);
+      localStorage.setItem("epicurean-orders", JSON.stringify(existing));
       setIsComplete(true);
     }
   };
