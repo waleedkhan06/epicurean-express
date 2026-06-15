@@ -2,7 +2,7 @@
 
 > **The Culinary Revolution Has Arrived.**
 >
-> A complete, ultra-premium luxury gourmet burger website built with Next.js 14, Tailwind CSS, and Framer Motion.
+> A complete, ultra-premium luxury gourmet burger website built with Next.js 16, Tailwind CSS, and Framer Motion.
 
 ![Epicurean Express](https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=1200&q=80)
 
@@ -14,7 +14,7 @@ Epicurean Express represents the highest level of indulgence — Wagyu burgers, 
 
 | Technology | Purpose |
 |------------|---------|
-| **Next.js 14** | React framework with App Router |
+| **Next.js 16** | React framework with App Router & Turbopack |
 | **TypeScript** | Type-safe development |
 | **Tailwind CSS** | Utility-first styling with custom luxury theme |
 | **Framer Motion** | Cinematic scroll animations, parallax, micro-interactions |
@@ -123,6 +123,12 @@ epicurean-express/
 - Form validation with success state
 
 ## Key Features
+
+### Authentication (Clerk)
+- Custom sign-in / sign-up pages (no Clerk defaults)
+- User profile on `/settings`
+- Route protection via proxy middleware
+- Auth state reflected in navbar (Sign In / Account dropdown)
 
 ### Cart System
 - Persistent cart via localStorage

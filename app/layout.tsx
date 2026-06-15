@@ -20,6 +20,10 @@ export const metadata: Metadata = {
     "luxury fast food",
     "premium dining",
   ],
+  icons: {
+    icon: "/images/logo.jpg",
+    apple: "/images/logo.jpg",
+  },
   openGraph: {
     title: "Epicurean Express | The Culinary Revolution",
     description: "Premium Wagyu burgers crafted with Michelin-starred precision.",
