@@ -175,9 +175,10 @@ export function HeroSection() {
             transition={{ delay: 0.3, duration: 0.6 }}
             className="mb-6"
           >
-            <span className="inline-flex items-center gap-2 px-4 py-1.5 border border-gold-400/30 rounded-full text-xs text-gold-300 tracking-[0.25em] uppercase bg-obsidian-900/40 backdrop-blur-md">
-              <span className="w-1.5 h-1.5 rounded-full bg-gold-400 animate-pulse" />
-              Est. 2024 — Culinary Excellence
+            <span className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 border border-gold-400/30 rounded-full text-[10px] sm:text-xs text-gold-300 tracking-[0.15em] sm:tracking-[0.25em] uppercase bg-obsidian-900/40 backdrop-blur-md">
+              <span className="w-1.5 h-1.5 rounded-full bg-gold-400 animate-pulse shrink-0" />
+              <span className="sm:hidden">Est. 2024</span>
+              <span className="hidden sm:inline">Est. 2024 — Culinary Excellence</span>
             </span>
           </motion.div>
 
