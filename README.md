@@ -4,7 +4,7 @@
 >
 > A complete, ultra-premium luxury gourmet burger website built with Next.js 16, Tailwind CSS, and Framer Motion.
 
-![Epicurean Express](./public/images/logo.jpg)
+![Epicurean Express](https://raw.githubusercontent.com/waleedkhan06/epicurean-express/main/public/images/logo.jpg)
 
 ## Overview
 
