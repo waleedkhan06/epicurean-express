@@ -8,7 +8,6 @@ export default authMiddleware({
     "/about",
     "/locations",
     "/contact",
-    "/order",
     "/checkout",
     "/sign-in",
     "/sign-up",
