@@ -3,7 +3,8 @@
 import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
 import { useRef, useState, useCallback } from "react";
 import { GoldButton } from "@/app/components/GoldButton";
-import { ChevronDown, Sparkles } from "lucide-react";
+import { ChevronDown } from "lucide-react";
+import Image from "next/image";
 
 function FloatingOrbs() {
   return (
@@ -27,17 +28,17 @@ function FloatingOrbs() {
 function SparkleField() {
   return (
     <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-      {Array.from({ length: 20 }).map((_, i) => (
+      {Array.from({ length: 8 }).map((_, i) => (
         <motion.div
           key={i}
           className="absolute w-1 h-1 bg-gold-400/60 rounded-full blur-[1px]"
-          style={{ left: `${(i * 5 + 7) % 100}%`, top: `${(i * 8 + 3) % 100}%` }}
+          style={{ left: `${(i * 12 + 7) % 100}%`, top: `${(i * 14 + 3) % 100}%` }}
           initial={{ opacity: 0, scale: 0 }}
           animate={{
             opacity: [0, 0.8, 0],
             scale: [0, 1.5, 0],
           }}
-          transition={{ duration: 2 + (i % 4), repeat: Infinity, delay: i * 0.3, ease: "easeInOut" }}
+          transition={{ duration: 2 + (i % 3), repeat: Infinity, delay: i * 0.5, ease: "easeInOut" }}
         />
       ))}
     </div>
@@ -48,6 +49,8 @@ export function HeroSection() {
   const containerRef = useRef<HTMLDivElement>(null);
   const shouldReduceMotion = useReducedMotion();
   const [activeVideo, setActiveVideo] = useState(0);
+  const [posterLoaded, setPosterLoaded] = useState(false);
+  const [videoStarted, setVideoStarted] = useState(false);
   const activeRef = useRef(0);
   const swapRef = useRef(false);
   const video1Ref = useRef<HTMLVideoElement>(null);
@@ -78,6 +81,11 @@ export function HeroSection() {
       }
     }
   }, []);
+
+  const handleVideoPlay = useCallback(() => {
+    setVideoStarted(true);
+  }, []);
+
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end start"],
@@ -96,26 +104,42 @@ export function HeroSection() {
       <motion.div style={{ y: bgY }} className="absolute inset-0">
         <div className="absolute inset-0 bg-obsidian-800" />
 
+        {/* Static poster image — loads instantly, fades when video plays */}
+        <div className="absolute inset-0">
+          <Image
+            src="/images/hero-bg.jpg"
+            alt=""
+            fill
+            priority
+            className={`object-cover transition-opacity duration-1000 ${videoStarted ? "opacity-0" : "opacity-100"}`}
+            sizes="100vw"
+            onLoad={() => setPosterLoaded(true)}
+          />
+        </div>
+
         {/* Video 1 */}
         <motion.video
           ref={video1Ref}
           autoPlay
           muted
           playsInline
+          preload="auto"
+          onPlay={handleVideoPlay}
           onTimeUpdate={() => handleNearEnd(0)}
-          initial={{ opacity: 0, scale: 1.05 }}
-          animate={{ opacity: activeVideo === 0 ? 1 : 0, scale: 1 }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: activeVideo === 0 ? 1 : 0 }}
           transition={{ duration: 1.2, ease: "easeInOut" }}
           className="absolute inset-0 w-full h-full object-cover"
         >
           <source src="/videos/hero1.mp4" type="video/mp4" />
         </motion.video>
 
-        {/* Video 2 (loops seamlessly via crossfade) */}
+        {/* Video 2 — only preload metadata until needed */}
         <motion.video
           ref={video2Ref}
           muted
           playsInline
+          preload="metadata"
           onTimeUpdate={() => handleNearEnd(1)}
           initial={{ opacity: 0 }}
           animate={{ opacity: activeVideo === 1 ? 1 : 0 }}
@@ -124,6 +148,7 @@ export function HeroSection() {
         >
           <source src="/videos/hero1.mp4" type="video/mp4" />
         </motion.video>
+
         {/* Overlay gradients for readability */}
         <div className="absolute inset-0 bg-gradient-to-b from-obsidian-800/70 via-obsidian-800/30 to-obsidian-900/90" />
         <div className="absolute inset-0 bg-gradient-to-r from-obsidian-800/80 via-transparent to-obsidian-800/60" />

@@ -24,6 +24,7 @@ export function ParallaxImageSection() {
             src="/images/parallax-bg.jpg"
             alt=""
             fill
+            priority
             className="object-cover"
             sizes="100vw"
           />

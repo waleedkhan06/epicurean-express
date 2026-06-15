@@ -61,6 +61,7 @@ export default function AboutPage() {
                   src="/images/about-story.jpg"
                   alt="Chef in kitchen"
                   fill
+                  priority
                   className="object-cover"
                   sizes="(max-width: 1024px) 100vw, 50vw"
                 />
